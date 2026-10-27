@@ -1,6 +1,5 @@
 import java.nio.file.Files
 import java.nio.file.Path
-<<<<<<< HEAD
 import kotlin.io.path.exists
 
 fun main() {
