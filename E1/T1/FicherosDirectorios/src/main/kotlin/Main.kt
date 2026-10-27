@@ -35,6 +35,7 @@ fun main() {
         println("2. Leer catálogo desde XML")
         println("3. Leer catálogo desde JSON")
         println("4. Conversiones entre formatos")
+        println("5. Gestión fichero BIN")
         println("0. Salir")
         println("====================================")
         print("Elige una opción: ")
@@ -58,6 +59,8 @@ fun main() {
             )
 
             4 -> menuConversiones()
+
+            5 -> menuBinario()
 
             0 -> println("Saliendo del programa...")
 
