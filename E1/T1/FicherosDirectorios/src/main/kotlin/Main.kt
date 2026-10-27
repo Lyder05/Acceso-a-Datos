@@ -11,6 +11,8 @@ fun main() {
 
     val rutaXML = Path.of("src", "main", "kotlin", "datos", "datos_ini", "videojuegos.xml")
 
+    val rutaJSON = Path.of("src", "main", "kotlin", "datos", "datos_ini", "videojuegos.json")
+
 
     val rutaLectura = if (Files.exists(rutaSalida)) {
         rutaSalida
@@ -31,6 +33,7 @@ fun main() {
         println("\n===== CATÁLOGO DE VIDEOJUEGOS =====")
         println("1. Gestión CSV")
         println("2. Leer catálogo desde XML")
+        println("3. Leer catálogo desde JSON")
         println("0. Salir")
         println("====================================")
         print("Elige una opción: ")
@@ -46,6 +49,13 @@ fun main() {
                 rutaXML,
                 rutaSalida
             )
+
+            3 -> importarVideojuegosJSON(
+                videojuegos,
+                rutaJSON,
+                rutaSalida
+            )
+
 
             0 -> println("Saliendo del programa...")
 
@@ -283,6 +293,51 @@ fun importarVideojuegosXML(catalogo: MutableList<Videojuego>, rutaXML: Path, rut
         println("No se ha podido completar la importación.")
     } else {
         println("Importación XML completada correctamente.")
+    }
+}
+
+
+fun importarVideojuegosJSON(catalogo: MutableList<Videojuego>, rutaJSON: Path, rutaSalida: Path) {
+
+    println("\n===== IMPORTAR VIDEOJUEGOS DESDE JSON =====")
+
+    if (!Files.isReadable(rutaJSON)) {
+        println("No se encuentra el archivo JSON: $rutaJSON")
+        return
+    }
+
+    val juegosJSON = leerVideojuegosJSON(rutaJSON)
+
+    if (juegosJSON.isEmpty()) {
+        println("No se han encontrado videojuegos para importar.")
+        return
+    }
+
+    println("\n--- VIDEOJUEGOS LEÍDOS DESDE JSON ---")
+
+    listarVideojuegos(juegosJSON)
+
+    val cantidadAntes = catalogo.size
+
+    val nuevos = integrarCatalogo(catalogo, juegosJSON)
+
+    println("\nVideojuegos leídos desde JSON: ${juegosJSON.size}")
+    println("Videojuegos nuevos integrados: $nuevos")
+    println("Total de videojuegos: ${catalogo.size}")
+
+    val guardado = guardarVideojuegosCSV(
+        rutaSalida,
+        catalogo
+    )
+
+    if (!guardado) {
+        while (catalogo.size > cantidadAntes) {
+            catalogo.removeAt(catalogo.lastIndex)
+        }
+
+        println("No se ha podido completar la importación.")
+    } else {
+        println("Importación JSON completada correctamente.")
     }
 }
 

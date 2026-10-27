@@ -1,5 +1,7 @@
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Videojuego(
 
         @JacksonXmlProperty(localName = "id")
@@ -17,4 +19,3 @@ data class Videojuego(
         @JacksonXmlProperty(localName = "nota")
         val nota: Double
 )
-
