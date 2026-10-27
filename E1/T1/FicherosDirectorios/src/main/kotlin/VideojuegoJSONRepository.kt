@@ -26,3 +26,28 @@ fun leerVideojuegosJSON(ruta: Path): List<Videojuego> {
         emptyList()
     }
 }
+
+
+fun escribirVideojuegosJSON(
+    ruta: Path,
+    lista: List<Videojuego>
+) {
+    try {
+        Files.createDirectories(ruta.parent)
+
+        val json = Json {
+            prettyPrint = true
+        }
+
+        val contenido = json.encodeToString(lista)
+
+        Files.writeString(ruta, contenido)
+
+        println("JSON guardado correctamente en: $ruta")
+
+    } catch (e: Exception) {
+        println("Error al escribir JSON: ${e.message}")
+        throw e
+    }
+}
+

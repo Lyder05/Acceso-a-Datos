@@ -34,6 +34,7 @@ fun main() {
         println("1. Gestión CSV")
         println("2. Leer catálogo desde XML")
         println("3. Leer catálogo desde JSON")
+        println("4. Conversiones entre formatos")
         println("0. Salir")
         println("====================================")
         print("Elige una opción: ")
@@ -56,6 +57,7 @@ fun main() {
                 rutaSalida
             )
 
+            4 -> menuConversiones()
 
             0 -> println("Saliendo del programa...")
 
